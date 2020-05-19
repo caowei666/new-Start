@@ -8,7 +8,7 @@ import java.util.Vector;
 /**
  * Collection接口：用于存储单个对象的集合
  *有两个子接口：
- *	1、List接口：有序的、允许多个空元素
+ *	1、List接口：有序的、允许多个空元素、元素可以重复
  *		具体的常用的实现类：ArrayList、Vector、LinkedList
  *		实际开发中如何选择list的具体实现呢：1、安全性问题，2、是否频繁插入，删除操作（LinkedList）
  *			3、是否存储后遍历（ArrayList）
