@@ -1,14 +1,44 @@
 package com.caowei;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public class IteratorDemo {
+	//断言接口
+	private static void predicateTest() {
+		List<String> list = Arrays.asList("Larry","tom","Curly","caowei");
+		List<String> result = filter(list,(s)->s.contains("c"));
+		result.forEach(System.out::println);
+	}
+	private static List<String> filter(List<String> list,Predicate<String> p){
+		List<String> results = new ArrayList<>();
+		for(String s:list) {
+			if(p.test(s)) {
+				results.add(s);
+			}
+		}
+		return results;
+	}
+	//Supplier代表结果供应商
+	private static void supplierTest() {
+		List<Integer> list = getNums(10,()->(int)(Math.random()*100));
+		list.forEach(System.out::println);
+	}
+	private static List<Integer> getNums(int num, Supplier<Integer> sup) {
+		List<Integer> list = new ArrayList<>();
+		for(int i = 0;i<num;i++) {
+			list.add(sup.get());
+		}
+		return list;
+	}
 	/**
 	 * Function接口的使用
 	 */
@@ -70,7 +100,9 @@ public class IteratorDemo {
 //		iterator1(list);
 //		enumration();
 //		foreachTest();
-		functionTest();
+//		functionTest();
+//		supplierTest();
+		predicateTest();
 	}
 
 }
