@@ -11,6 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
  *   （3）使用同步锁（更灵活）
  *  同步会牺牲性能换取安全所以同步的代码块要保持简短，把不随数据变化的相关代码移除同步块
  *  不要阻塞
+ *4、线程死锁：在一个同步方法中调用了另一个对象的同步方法，可能产生死锁
  */
 public class ThreadDemo4 {
     public static void main(String[] args) {
