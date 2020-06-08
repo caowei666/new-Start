@@ -5,6 +5,12 @@ public class Dog {
     private String name;
     private int age;
     private String color;
+    private void set(){
+        System.out.println("set");
+    }
+    protected void get(){
+        System.out.println("get");
+    }
 
     public String getName() {
         return name;

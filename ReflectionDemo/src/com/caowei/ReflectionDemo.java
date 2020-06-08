@@ -2,12 +2,49 @@ package com.caowei;
 
 import org.junit.Test;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Modifier;
+import java.lang.reflect.*;
 
 public class ReflectionDemo {
+    @Test
+    public void test5(){
+        Dog dog = new Dog("wangwang",5,"black");
+        Class<Dog> dogClass = Dog.class;
+        Package aPackage = dogClass.getPackage();
+        System.out.println(aPackage.getName());
+        //获取公告的方法，包括继承的公有方法
+        Method[] methods = dogClass.getMethods();
+        for (int i = 0; i < methods.length; i++) {
+            System.out.println(methods[i]);
+            if(methods[i].getName().equals("toString")){
+//                Object invoke = methods[i].invoke(dog);
+                try {
+                    String s = (String)methods[i].invoke(dog);
+                    System.out.println(s);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        System.out.println("------");
+        //访问私有方法,获取到本类中定义的所有方法（不包括父类）
+        Method[] declaredMethods = dogClass.getDeclaredMethods();
+        for (int i = 0; i < declaredMethods.length; i++) {
+            System.out.println(declaredMethods[i]);
+            if(declaredMethods[i].getName().equals("set")){
+                //设置私有方法可以被访问
+                declaredMethods[i].setAccessible(true);
+                try {
+                    declaredMethods[i].invoke(dog);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
     @Test
     public void test4(){
         Class<Dog> dogClass = Dog.class;
