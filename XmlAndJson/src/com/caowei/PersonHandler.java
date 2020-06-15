@@ -7,6 +7,13 @@ import org.xml.sax.helpers.DefaultHandler;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 基于事件
+ * 顺序读取，速度快
+ * 不够灵活
+ * 省内存
+ */
+
 //ctrl+o添加以下方法重写
 public class PersonHandler extends DefaultHandler {
     private List<Person> persons = new ArrayList<>();
@@ -40,6 +47,7 @@ public class PersonHandler extends DefaultHandler {
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         super.startElement(uri, localName, qName, attributes);
+        System.out.println("startElement"+qName);
         if("person".equals(qName)){
             p = new Person();
             String personid = attributes.getValue("personid");
@@ -51,6 +59,7 @@ public class PersonHandler extends DefaultHandler {
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
         super.endElement(uri, localName, qName);
+        System.out.println("endElement"+qName);
         if("person".equals(qName)){
             persons.add(p);
         }
@@ -60,7 +69,9 @@ public class PersonHandler extends DefaultHandler {
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
         super.characters(ch, start, length);
+//        System.out.println(ch);
         if(tag != null){
+            System.out.println(new String(ch));
             if("name".equals(tag)){
                 p.setName(new String(ch,start,length));
             }else if("address".equals(tag)){
