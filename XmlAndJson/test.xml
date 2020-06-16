@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.8.0_172" class="java.beans.XMLDecoder">
+ <object class="com.caowei.Person">
+  <void property="address">
+   <string>北京</string>
+  </void>
+  <void property="email">
+   <string>caowei@164.com</string>
+  </void>
+  <void property="fax">
+   <string>1239686</string>
+  </void>
+  <void property="name">
+   <string>18</string>
+  </void>
+  <void property="personid">
+   <string>1212</string>
+  </void>
+  <void property="tel">
+   <string>123321123</string>
+  </void>
+ </object>
+</java>

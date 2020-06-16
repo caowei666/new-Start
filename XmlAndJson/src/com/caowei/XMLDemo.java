@@ -1,5 +1,9 @@
 package com.caowei;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.Xpp3DomDriver;
+import org.dom4j.DocumentException;
+import org.dom4j.io.SAXReader;
 import org.jdom.Attribute;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -11,13 +15,103 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.*;
-import java.io.IOException;
-import java.io.InputStream;
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 public class XMLDemo {
+    /**
+     * 使用第三方的xstream组件实现xml的解析生成
+     */
+    @Test
+    public void xStream(){
+        Person p = new Person();
+        p.setPersonid("1212");
+        p.setAddress("北京");
+        p.setEmail("caowei@164.com");
+        p.setFax("1239686");
+        p.setTel("123321123");
+        p.setName("18");
+        XStream xStream = new XStream(new Xpp3DomDriver());
+        xStream.alias("person",Person.class);
+        xStream.useAttributeFor(Person.class,"personid");
+        String xml = xStream.toXML(p);
+        System.out.println(xml);
+        //解析xml
+        Person person = (Person) xStream.fromXML(xml);
+        System.out.println(person);
+
+    }
+    /**
+     * 从xml读取对象
+     */
+    @Test
+    public void xmlDecoder() throws FileNotFoundException {
+        BufferedInputStream in = new BufferedInputStream(new FileInputStream("test.xml"));
+        XMLDecoder decoder = new XMLDecoder(in);
+        Person person = (Person) decoder.readObject();
+        System.out.println(person);
+    }
+    /**
+     * 把对象转成XML文件写入
+     */
+    @Test
+    public void xmlEnCoder() throws FileNotFoundException {
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("test.xml"));
+        XMLEncoder xmlEncoder = new XMLEncoder(bos);
+        Person p = new Person();
+        p.setPersonid("1212");
+        p.setAddress("北京");
+        p.setEmail("caowei@164.com");
+        p.setFax("1239686");
+        p.setTel("123321123");
+        p.setName("18");
+        xmlEncoder.writeObject(p);
+        xmlEncoder.close();
+    }
+    /**
+     * DOM4J解析XML
+     * 基于树形结构，第三方组件
+     * 解析速度快，效率高，使用的是JAVA中的迭代器实现数据读取，在web框架中使用较多（Hibernate）
+     */
+    @Test
+    public void dom4jParseXML() throws DocumentException {
+        //1、创建DOM4J的解析器
+        SAXReader reader = new SAXReader();
+        InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("com/caowei/person.xml");
+        org.dom4j.Document doc = reader.read(is);
+        org.dom4j.Element rootElement = doc.getRootElement();
+        Iterator<org.dom4j.Element> iterator = rootElement.elementIterator();
+        ArrayList<Person> persons = new ArrayList<>();
+        Person p = null;
+        while (iterator.hasNext()){
+            p = new Person();
+            org.dom4j.Element e = iterator.next();
+            p.setPersonid(e.attributeValue("personid"));
+            Iterator<org.dom4j.Element> iterator1 = e.elementIterator();
+            while (iterator1.hasNext()){
+                org.dom4j.Element next = iterator1.next();
+                String tag = next.getName();
+                if("name".equals(tag)){
+                    p.setName(next.getText());
+                }else if("address".equals(tag)){
+                    p.setAddress(next.getText());
+                }else if("tel".equals(tag)){
+                    p.setTel(next.getText());
+                }else if("fax".equals(tag)){
+                    p.setFax(next.getText());
+                }else if("email".equals(tag)){
+                    p.setEmail(next.getText());
+                }
+            }
+            persons.add(p);
+        }
+        System.out.println(Arrays.toString(persons.toArray()));
+    }
     /**
      *与DOM类似，基于树形结构
      * 与DOM的区别：1、属于第三方开源组件，2、实现使用JAVA的collections接口
