@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<list>
+    <clothes id="A0001">
+        <brand>VEROMODA</brand>
+        <style>连衣裙</style>
+        <color>白色</color>
+        <size>S</size>
+        <num>4</num>
+        <price>274.0</price>
+        <description>夏季五分袖连衣裙</description>
+    </clothes>
+    <clothes id="A0002">
+        <brand>GAP</brand>
+        <style>连衣裙</style>
+        <color>黑白色</color>
+        <size>S</size>
+        <num>19</num>
+        <price>164.0</price>
+        <description>系带午休夏季柔软碎花背心裙</description>
+    </clothes>
+    <clothes id="A0003">
+        <brand>ONLY</brand>
+        <style>连衣裙</style>
+        <color>蓝色</color>
+        <size>均码</size>
+        <num>8</num>
+        <price>599.0</price>
+        <description>荷叶边系带连衣裙</description>
+    </clothes>
+    <clothes id="A0004">
+        <brand>女人镜</brand>
+        <style>连衣裙</style>
+        <color>蓝色</color>
+        <size>S</size>
+        <num>19</num>
+        <price>164.0</price>
+        <description>工厂直销新款女装时尚气质修身夏季显瘦连衣裙</description>
+    </clothes>
+    <clothes id="A0005">
+        <brand>欧时力</brand>
+        <style>连衣裙</style>
+        <color>粉红色</color>
+        <size>S</size>
+        <num>15</num>
+        <price>99.0</price>
+        <description>新款女夏装拼接印花棉质短袖连衣裙</description>
+    </clothes>
+    <clothes id="A0006">
+        <brand>茵曼</brand>
+        <style>连衣裙</style>
+        <color>绿色</color>
+        <size>S</size>
+        <num>9</num>
+        <price>299.0</price>
+        <description>夏季宽松大码棉麻裙</description>
+    </clothes>
+</list>
