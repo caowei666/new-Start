@@ -17,8 +17,15 @@ import java.util.Date;
 import java.util.List;
 
 public class HomeClass extends BaseClass {
-    private OrderService orderService = new OrderServiceImpl();
-    private ClothesService clothesService = new ClothesServiceImpl();
+    //private OrderService orderService = new OrderServiceImpl();
+    //private ClothesService clothesService = new ClothesServiceImpl();
+    private OrderService orderService;
+    private ClothesService clothesService;
+
+    public HomeClass(){
+        orderService = (OrderService) beanFactory.getBean("orderService");
+        clothesService = (ClothesService) beanFactory.getBean("clothesService");
+    }
 
     public void show(){
         showProducts();
@@ -54,6 +61,7 @@ public class HomeClass extends BaseClass {
                     break;
                 case "0":   //退出
                     flag = false;
+                    println(getString("info.exit"));
                     System.exit(0);
                     break;
                 default:
@@ -114,7 +122,16 @@ public class HomeClass extends BaseClass {
         show();
     }
 
-    private void findOrderByID() {  
+    private void findOrderByID() {
+        println(getString("product.order.input.oid"));
+        String oid = input.nextLine();
+        Order order = orderService.findById(Integer.parseInt(oid));
+        if(order != null){
+            showOrder(order);
+        }else {
+            println(getString("product.order.error"));
+        }
+        menu();
     }
 
     private void findOrderList() {
@@ -131,14 +148,15 @@ public class HomeClass extends BaseClass {
         println("\t"+getString("product.order.sum")+o.getSum());
         TTable<OrderItem> tTable = new TTable<>();
         tTable.addColumn(" itemId","itemId",10);
-        tTable.addColumn(" brand","brand",10);
-        tTable.addColumn(" style","style",10);
-        tTable.addColumn(" color","color",10);
-        tTable.addColumn(" size","size",10);
-        tTable.addColumn(" price","price",10);
-        tTable.addColumn(" description","description",80);
         tTable.addColumn(" shoppingNum","shoppingNum",10);
         tTable.addColumn(" sum","sum",10);
+        tTable.addColumn(" clothes","clothes",100);
+//        tTable.addColumn(" brand","brand",10);
+//        tTable.addColumn(" style","style",10);
+//        tTable.addColumn(" color","color",10);
+//        tTable.addColumn(" size","size",10);
+//        tTable.addColumn(" price","price",10);
+//        tTable.addColumn(" description","description",20);
         tTable.printHeader();
         tTable.printBeans(o.getOrderItemList());
         println("");

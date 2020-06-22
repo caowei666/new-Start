@@ -12,9 +12,11 @@ public class OrderIO {
 
     public void add(Order order)throws BusinessException{
         orders.add(order);
+        writeOrders();
     }
 
     public List<Order> list() throws BusinessException{
+        readOrders();
         return orders;
     }
 
